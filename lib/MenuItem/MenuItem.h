@@ -31,6 +31,7 @@ public:
     void execute();
     void setState(bool state);
     bool getState();
+    int getValue();
     const char *getLabel();
     MenuItemType getType();
 };

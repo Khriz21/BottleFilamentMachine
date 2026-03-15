@@ -26,8 +26,9 @@ MenuItem::MenuItem(const char *label, int *valuePtr)
 }
 
 void MenuItem::execute()
-{   
-    if(action != nullptr) action();
+{
+    if (action != nullptr)
+        action();
 }
 
 void MenuItem::setState(bool state)
@@ -40,11 +41,17 @@ bool MenuItem::getState()
     return this->toggleState;
 }
 
+int MenuItem::getValue()
+{
+    return *this->valuePtr;
+}
+
 const char *MenuItem::getLabel()
 {
     return this->label;
 }
 
-MenuItem::MenuItemType MenuItem::getType(){
+MenuItem::MenuItemType MenuItem::getType()
+{
     return this->type;
 }

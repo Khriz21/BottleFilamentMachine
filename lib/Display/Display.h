@@ -1,28 +1,22 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-#include<Arduino.h>
-#include<Wire.h>
-#include<LiquidCrystal_I2C.h>
-#include"Menu.h"
+#include <Arduino.h>
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include "Menu.h"
 
-LiquidCrystal_I2C lcd(0x27, 16, 2);
 class Display
 {
 private:
-    /* data */
+    LiquidCrystal_I2C &_lcd;
+    bool _needsUpdate;
+
 public:
-    Display(/* args */);
-    ~Display();
+    Display(LiquidCrystal_I2C &lcd);
+
+    void begin();
+    void render(Menu &menu);
 };
-
-Display::Display(/* args */)
-{
-}
-
-Display::~Display()
-{
-}
-
 
 #endif
