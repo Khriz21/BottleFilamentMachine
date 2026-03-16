@@ -10,7 +10,10 @@ class Display
 {
 private:
     LiquidCrystal_I2C &_lcd;
+    uint8_t _firstVisible;
     bool _needsUpdate;
+    const uint8_t _height;
+    const uint8_t _width;
 
 public:
     Display(LiquidCrystal_I2C &lcd);

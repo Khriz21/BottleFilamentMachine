@@ -20,7 +20,6 @@ private:
     MenuAction action;
     bool toggleState = false;
     int *valuePtr;
-
     MenuItemType type;
 
 public:

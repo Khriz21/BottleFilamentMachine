@@ -39,7 +39,7 @@ void Menu::selec()
         selected->execute();
         break;
     case MenuItem::VALUE:
-        // Valor a actualizar
+        selected->getValue();
         break;
     
     default:
