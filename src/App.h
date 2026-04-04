@@ -3,31 +3,35 @@
 
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
-#include "../../include/PinConfig.h"
-
+#include "../include/PinConfig.h"
 #include "Display.h"
 #include "Menu.h"
 #include "Encoder.h"
 #include "MenuItem.h"
+#include "Extruder.h"
+#include "../lib/PIDController/PIDController.h"
 
 class App
 {
 private:
     LiquidCrystal_I2C _lcd;
     Display _display;
-    Menu _menu;
-
+    Menu _mainMenu;
     Encoder _encoder;
-    
+    Extruder _extruder;
+    PIDController _pidController;
 
     enum AppMode
     {
         HOME_SCREEN,
         MAIN_MENU,
-        SET_TEMPERATURE,
-        SET_SPEED
-    } 
-    _appMode;
+        SET_VALUES,
+        TUNING_PID
+    } _appMode;
+
+    uint8_t _pidTuningIndex;
+    bool _valueEditMode;
+    int _lastDisplayTemp;
 
     MenuItem _motorItem;
     MenuItem _heaterItem;
@@ -36,17 +40,20 @@ private:
     MenuItem _tuningPIDItem;
     MenuItem _exitItem;
 
-    uint8_t _targetTemperature;
-    uint8_t _targetSpeed;
-
     static App *_instance;
 
-    void handleUI();
+    void _handleUI();
+    void _homeMode();
+    void _menuMode();
+    void _updatingValMode();
+    void _tuningMode();
 
-    static void onSetToggle();
-    static void onSetUpdateValue();
-    static void onSetAction();
-
+    static void onSetToggleMotor();
+    static void onSetToggleHeater();
+    static void onSetTemperature();
+    static void onSetSpeed();
+    static void onSetActionMenu();
+    static void onSetExitMenu();
 
 public:
     App();

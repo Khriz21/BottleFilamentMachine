@@ -10,14 +10,14 @@ private:
     uint8_t pinDT;
     uint8_t pinSW;
 
-    static Encoder *instance;
+    static Encoder *_instance;
     static void isrMovement();
     static void isrSW();
 
-    volatile int32_t position = 0;
-    volatile bool buttonClicked = false;
-    volatile unsigned long lastInterrupTime;
-    unsigned long lastButtonPress = 0;
+    volatile int32_t _position = 0;
+    volatile bool _buttonClicked = false;
+    volatile unsigned long _lastInterrupTime = 0;
+    unsigned long _lastButtonPress = 0;
 
 public:
     Encoder(uint8_t clk, uint8_t dt, uint8_t sw);
@@ -26,6 +26,7 @@ public:
 
     int32_t getDelta();
     bool wasClicked();
+    void reset();
 };
 
 #endif

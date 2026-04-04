@@ -1,0 +1,40 @@
+Processing uno (platform: atmelavr; board: uno; framework: arduino)
+--------------------------------------------------------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+CONFIGURATION: https://docs.platformio.org/page/boards/atmelavr/uno.html
+PLATFORM: Atmel AVR (4.0.0) > Arduino Uno
+HARDWARE: ATMEGA328P 16MHz, 2KB RAM, 31.50KB Flash
+DEBUG: Current (avr-stub) On-board (avr-stub, simavr)
+PACKAGES: 
+ - framework-arduino-avr @ 5.1.0 
+ - toolchain-atmelavr @ 1.70300.191015 (7.3.0)
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 15 compatible libraries
+Scanning dependencies...
+Dependency Graph
+|-- LiquidCrystal_I2C @ 1.1.4
+|-- Time @ 1.6.1
+|-- TimerOne @ 1.2.0
+|-- Display
+|-- Encoder
+|-- Menu
+|-- MenuItem
+|-- Motor
+|-- PIDController
+|-- Thermistor
+Building in release mode
+Compiling .pio\build\uno\src\App.cpp.o
+Archiving .pio\build\uno\lib1dd\libPIDController.a
+Archiving .pio\build\uno\libb30\libThermistor.a
+src\App.cpp: In member function 'void App::_processHeater()':
+src\App.cpp:147:37: error: 'void Thermistor::readTemperature()' is private within this context
+         _thermistor.readTemperature();
+                                     ^
+In file included from src\App.h:12:0,
+                 from src\App.cpp:1:
+lib\Thermistor/Thermistor.h:21:10: note: declared private here
+     void readTemperature(); // Method to read temperature from the thermistor
+          ^~~~~~~~~~~~~~~
+*** [.pio\build\uno\src\App.cpp.o] Error 1
+========================== [FAILED] Took 2.36 seconds ==========================

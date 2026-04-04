@@ -1,10 +1,10 @@
 #include "Encoder.h"
 
-Encoder *Encoder::instance = nullptr;
+Encoder *Encoder::_instance = nullptr;
 Encoder::Encoder(uint8_t clk, uint8_t dt, uint8_t sw)
     : pinCLK(clk), pinDT(dt), pinSW(sw)
 {
-    instance = this;
+    _instance = this;
 }
 
 //? <=====Iniciar Pines he interruptor de tiempo=====>
@@ -22,46 +22,53 @@ void Encoder::begin()
 
 void Encoder::isrMovement()
 {
-    unsigned long now = millis();
+    unsigned long now = micros();
 
-    if (now - instance->lastInterrupTime < 150) return;
-    bool clkState = digitalRead(instance->pinCLK);
+    if (now - _instance->_lastInterrupTime < 1000) return;
+    bool clkState = digitalRead(_instance->pinCLK);
 
     if (clkState == LOW)
-        instance->position++;
+        _instance->_position++;
     else
-        instance->position--;
+        _instance->_position--;
 
-    instance->lastInterrupTime = now;
+    _instance->_lastInterrupTime = now;
 }
 
 void Encoder::isrSW()
 {
     unsigned long currentTime = millis();
 
-    if (currentTime - instance->lastButtonPress > 200)
+    if (currentTime - _instance->_lastButtonPress > 200)
     {
-        instance->buttonClicked = true;
-        instance->lastButtonPress = currentTime;
+        _instance->_buttonClicked = true;
+        _instance->_lastButtonPress = currentTime;
     }
 }
 
 int32_t Encoder::getDelta()
 {
     noInterrupts();
-    int32_t tem = position;
-    position = 0;
+    int32_t tem = _position;
+    _position = 0;
     interrupts();
     return tem;
 }
 
 bool Encoder::wasClicked()
 {
-    if (instance->buttonClicked)
+    if (_instance->_buttonClicked)
     {
-        instance->buttonClicked = false;
+        _instance->_buttonClicked = false;
         return true;
     }
 
     return false;
+}
+
+void Encoder::reset()
+{
+    noInterrupts();
+    _position = 0;
+    interrupts();
 }

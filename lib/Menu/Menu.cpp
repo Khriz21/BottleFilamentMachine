@@ -2,18 +2,18 @@
 
 Menu::Menu(const char *title)
 {
-    this->title = title;
-    this->itemCount = 0;
-    this->currentIndex = 0;
+    _title = title;
+    _itemCount = 0;
+    _currentIndex = 0;
      
 }
 
 bool Menu::addItem(MenuItem *item)
 {
-    if (this->itemCount < MAX_MENU_ITEMS )
+    if (_itemCount < MAX_MENU_ITEMS )
     {
-        this->items[this->itemCount] = item;
-        this->itemCount++;
+        _items[_itemCount] = item;
+        _itemCount++;
         return true;
     }
     
@@ -21,14 +21,14 @@ bool Menu::addItem(MenuItem *item)
 }
 
 void Menu::navigate(int32_t delta)
-{   if(this->itemCount > 0) 
-        this->currentIndex = (currentIndex + delta + this->itemCount)%this->itemCount;
+{   if(_itemCount > 0) 
+        _currentIndex = (_currentIndex + delta + _itemCount)%_itemCount;
 }
 
 void Menu::select()
 {
-    if(this->itemCount == 0) return;
-    MenuItem* selected = this->items[this->currentIndex];
+    if(_itemCount == 0) return;
+    MenuItem* selected = _items[_currentIndex];
     switch (selected->getType())
     {
     case MenuItem::ACTION:
@@ -47,11 +47,11 @@ void Menu::select()
 }
 
 MenuItem *Menu::getItem(uint8_t index){
-    if(index >= this->itemCount) return nullptr;
-    return this->items[index];
+    if(index >= _itemCount) return nullptr;
+    return _items[index];
 }
 
-MenuItem *Menu::getCurrentItem(){return this->items[this->currentIndex];}
-const char *Menu::getTitle(){ return this->title; }
-uint8_t Menu::getItemCount() { return this->itemCount; }
-uint8_t Menu::getCurrentIndex(){ return this->currentIndex; }
+MenuItem *Menu::getCurrentItem(){return _items[_currentIndex];}
+const char *Menu::getTitle(){ return _title; }
+uint8_t Menu::getItemCount() { return _itemCount; }
+uint8_t Menu::getCurrentIndex(){ return _currentIndex; }

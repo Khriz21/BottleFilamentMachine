@@ -7,10 +7,10 @@
 class Menu
 {
 private:
-    const char* title;
-    MenuItem* items[MAX_MENU_ITEMS];
-    uint8_t itemCount;
-    uint8_t currentIndex;
+    const char* _title;
+    MenuItem* _items[MAX_MENU_ITEMS];
+    uint8_t _itemCount;
+    uint8_t _currentIndex;
 
 public:
     Menu(const char* title);

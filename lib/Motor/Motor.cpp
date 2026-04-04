@@ -7,7 +7,10 @@ Motor::Motor(uint8_t stepPin, uint8_t dirPin, uint8_t enablePin)
     _pulseState(LOW),
     _targetSpeed(0),
     _pulpserInterval(2000), // Default to 1ms step interval
-    _enabled(false)
+    _enabled(false),
+    _minInterval(1000),      // 1000us minimum interval (fastest)
+    _maxInterval(10000),     // 10000us maximum interval (slowest)
+    _direction(true)         // Clockwise default
 {
     _instance = this; // Set the static instance pointer for ISR
 }
@@ -35,10 +38,12 @@ void Motor::generateStepPulse()
 
 void Motor::updateSpeed(uint8_t speed)
 {
-    // Map speed (0-255) to step interval (maxInterval to minInterval)
     _pulpserInterval = map(speed, 0, 255, _maxInterval, _minInterval);
-    if (!_enabled) return;
-    Timer1.initialize(_pulpserInterval);
+    if (_enabled) {
+        Timer1.stop();
+        Timer1.initialize(_pulpserInterval);
+        Timer1.resume();
+    }
 }
 
 

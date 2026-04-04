@@ -12,8 +12,8 @@ void Display::begin()
     _lcd.createChar(0, arrow);
 }
 
-void Display::setNeedsUpdate(bool needsUpdate){this->_needsUpdate = needsUpdate;}
-bool Display::needsUpdate(){return this->_needsUpdate;}
+void Display::setNeedsUpdate(bool needsUpdate){_needsUpdate = needsUpdate;}
+bool Display::needsUpdate(){return _needsUpdate;}
 
 void Display::render(Menu &menu)
 {
@@ -73,18 +73,18 @@ void Display::render(Menu &menu)
         // pad with spaces to clear any leftover characters from previous render
         for(uint8_t j = line.length(); j < _width; j++) _lcd.print(" ");
     }
-    this->_needsUpdate = false;  
+    _needsUpdate = false;  
 }
 
-void Display::mainDisplay(const char* TLabel, const char* mLavel, uint8_t setTemp, uint8_t curTemp, uint8_t setSpeed)
+void Display::showHomeScreen(const char* TLabel, const char* mLavel, uint8_t setTemp, int16_t curTemp, uint8_t setSpeed)
 {
     char buffer[17];
-    snprintf(buffer, sizeof(buffer),"%s: %dC/%dC",TLabel, setTemp, curTemp);
+    snprintf(buffer, sizeof(buffer),"%s: %d/%dC",TLabel, setTemp, (int)curTemp);
     _lcd.setCursor(0, 0);
     _lcd.print(buffer);
     snprintf(buffer, sizeof(buffer), "%s: %d%%",mLavel, setSpeed);
     _lcd.setCursor(0, 1);
     _lcd.print(buffer);
-    this->_needsUpdate = false;
+    _needsUpdate = false;
 }
 
